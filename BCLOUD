@@ -1,0 +1,22 @@
+# edit-mode: -*- python -*-
+# -*- coding:utf-8 -*- 
+WORKROOT('')
+COMPILER('gcc10')
+
+CPPFLAGS('-DNDEBUG -DHAVE_CONFIG_H -D_GNU_SOURCE=1 -Devent_core_shared_EXPORTS')
+CFLAGS('-g -O3 -pipe -W -Wall -Wextra -fvisibility=hidden')
+
+if COMPILER_VERSION() != 'gcc82':
+    CPPFLAGS('-DEVENT__HAVE_SYS_RANDOM_H=1')
+    CPPFLAGS('-DEVENT__HAVE_GETRANDOM=1')
+
+INCPATHS('include')
+
+HEADERS('include/*.h', '$INC')
+HEADERS('include/event2/*.h', '$INC/event2')
+
+StaticLibrary('event', Sources('buffer.c', 'bufferevent.c', 'bufferevent_filter.c', 'bufferevent_pair.c', 'bufferevent_ratelim.c', 'bufferevent_sock.c', 'event.c', 'evmap.c', 'evthread.c', 'evutil.c', 'evutil_rand.c', 'evutil_time.c', 'listener.c', 'log.c', 'signal.c', 'strlcpy.c', 'select.c', 'poll.c', 'epoll.c', 'event_tagging.c', 'http.c', 'evdns.c', 'evrpc.c'))
+StaticLibrary('event_core', Sources('buffer.c', 'bufferevent.c', 'bufferevent_filter.c', 'bufferevent_pair.c', 'bufferevent_ratelim.c', 'bufferevent_sock.c', 'event.c', 'evmap.c', 'evthread.c', 'evutil.c', 'evutil_rand.c', 'evutil_time.c', 'listener.c', 'log.c', 'signal.c', 'strlcpy.c', 'select.c', 'poll.c', 'epoll.c'))
+StaticLibrary('event_extra', Sources('event_tagging.c', 'http.c', 'evdns.c', 'evrpc.c'))
+StaticLibrary('event_openssl', Sources('bufferevent_openssl.c'))
+StaticLibrary('event_pthreads', Sources('evthread_pthread.c'))
